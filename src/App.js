@@ -12,7 +12,7 @@ function App() {
     [1, 2, 3,],
     [4, 5, 6,],
     [7, 8, 9,],
-    ['<',0,'.']
+    ['',0,'.']
   ]
 
   let cback = 0
@@ -83,10 +83,11 @@ function App() {
   }
 
   function handleChange(e){
-    const re = /^\d{1,}(\.\d{0,4})?$/;
+    const re = /^\d{1,}(\.\d{0,2})?$/;
+    const amount = e.target.value;
 
-    if (e.target.value.match(re)) {
-      setValue(e.target.value)
+    if (!amount || amount.match(re)) {
+      setValue(amount)
     } 
   }
  
@@ -172,7 +173,7 @@ function App() {
       </div>}
       </div>
       <form onSubmit ={handleSubmit}>
-        <input step = '0.01' value = {value}  ref={textInput} placeholder = 'сумма' onChange = {handleChange}/>
+        <input value = {value}  ref={textInput} placeholder = 'сумма' onChange = {handleChange}/>
         <input type="submit" value="Выдача" />
       </form>
         <input type="number" placeholder = 'остаток' readOnly = {true} ref={textOutput} value = {cashback.toFixed(2)}/>
