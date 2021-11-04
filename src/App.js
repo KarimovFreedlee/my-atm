@@ -7,7 +7,7 @@ function App() {
   const [cashamount, setCashAmount] = useState([100,200,300,400,500,600,700])
   const [cashSpend, setCashspend] = useState([0,0,0,0,0,0,0])
   const [showInfo, setShowInfo] = useState(false)
-  const [cashback, setCashback] = useState()
+  const [cashback, setCashback] = useState(0)
   const btnValues = [
     [1, 2, 3,],
     [4, 5, 6,],
@@ -23,7 +23,7 @@ function App() {
   function greedy(amount, coins, camount){
    
     var coincount = [0,0,0,0,0,0,0];
-    var creminder = amount; 
+    var creminder = amount + cashback; 
     var ccoin;
     var cbackIsTradable = false;
     
@@ -35,7 +35,6 @@ function App() {
       var j = 0
       while( i < coins.length )
       { 
-        // coincount[i] = 0;
           while ( coins[i] <= creminder && camount[i] > 0) // cash giving
           {
             if(camount[i+1] < camount[i] || i === coins.length - 1)
@@ -49,8 +48,10 @@ function App() {
           }   
         i++;
       }
+      setCashback(creminder)
       cback = creminder
       setCashAmount(camount)
+      setCashspend(arrayAction(cashSpend,coincount))
       while ( j < coins.length)
       {
         if(camount[j] > 0 && cback >= coins[j]){
@@ -64,24 +65,13 @@ function App() {
       }
     }
     while(cbackIsTradable)
-    setCashspend(arrayAction(cashSpend,coincount,'increment'))
   }
 
-  function arrayAction(currentAmount, amountToDicrement, action){
-    switch (action){
-      case 'increment':
-        for(let i = 0; i < currentAmount.length; i++){
-          currentAmount[i] += amountToDicrement[i]
-        }
-        return currentAmount
-      case 'dicriment':
-        for(let i = 0; i < currentAmount.length; i++){
-          currentAmount[i] -= amountToDicrement[i]
-        }
-        return currentAmount
-      default:
-        return currentAmount
-    } 
+  function arrayAction(currentAmount, amountToDicrement){
+    for(let i = 0; i < currentAmount.length; i++){
+      currentAmount[i] += amountToDicrement[i]
+    }
+    return currentAmount
   }
 
   function countCash(cashArray, cashValueArray){
@@ -108,10 +98,9 @@ function App() {
     e.preventDefault();
     if(countCash(cashamount, cash) - value  > 0){
       greedy(+value,cash,cashamount)
-    } else alert('не хватате средств в банкомате!')
+    } else alert('не хватает средств в банкомате!')
     textInput.current.value = ''
     setValue(0)
-    textOutput.current.value = cback
   }
 
   function handleOptionChange(e){
@@ -153,8 +142,9 @@ function App() {
 
   return (
     <div className="App">
+      <div>
       {showInfo ? 
-        <div className = 'info'><div>наличные в банкомате</div>
+        <div className = 'close-btn'><div>наличные в банкомате</div>
           <div className = 'outputs'>
             {cashamount.map((obj,i) => {
               return (
@@ -167,14 +157,15 @@ function App() {
           </div>
           <button className = 'btn' onClick={handleShowInfo}>скрыть справку</button>
         </div> 
-      :<div className = ''>
-        <button className ='btn info-btn' onClick= {handleShowInfo}>показать справку</button>
+      :<div className = 'info-btn'>
+        <button className ='btn' onClick= {handleShowInfo}>показать справку</button>
       </div>}
+      </div>
       <form onSubmit ={handleSubmit}>
         <input  ref={textInput} placeholder = 'сумма' onChange = {handleChange}/>
         <input type="submit" value="Выдача" />
       </form>
-        <input type="number" placeholder = 'остаток' readOnly = {true} ref={textOutput}/>
+        <input type="number" placeholder = 'остаток' readOnly = {true} ref={textOutput} value = {cashback}/>
       <div className = 'btnBox'>
       {
         btnValues.flat().map((btn, i) => {

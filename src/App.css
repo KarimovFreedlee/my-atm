@@ -9,6 +9,20 @@
   justify-content: space-between;
 }
 
+.outputs{
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.close-btn{
+  padding-bottom: 30px;
+}
+
+.info-btn{
+  padding-top: 85px;
+  padding-bottom: 50px;
+}
+
 .elem{
   font-size: 24px;
   color: rgb(255, 255, 255);
