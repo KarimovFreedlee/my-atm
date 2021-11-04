@@ -5,11 +5,13 @@
 }
 
 .info{
+  width: 100%;
   display: flex;
   justify-content: space-between;
 }
 
 .outputs{
+  width: 100%;
   display: flex;
   margin-bottom: 20px;
 }
@@ -32,6 +34,7 @@ input{
   text-align: center;
   border: none;
   cursor: pointer;
+  height: 30px;
 }
 
 .btnBox {
