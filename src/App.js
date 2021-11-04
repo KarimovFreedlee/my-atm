@@ -3,7 +3,7 @@ import React , {useState} from 'react'
 
 function App() {
 
-  const [value, setValue] = useState(0)
+  const [value, setValue] = useState('')
   const [cashamount, setCashAmount] = useState([100,200,300,400,500,600,700])
   const [cashSpend, setCashspend] = useState([0,0,0,0,0,0,0])
   const [showInfo, setShowInfo] = useState(false)
@@ -12,7 +12,7 @@ function App() {
     [1, 2, 3,],
     [4, 5, 6,],
     [7, 8, 9,],
-    ['',0,'.']
+    ['<',0,'.']
   ]
 
   let cback = 0
@@ -51,7 +51,6 @@ function App() {
       setCashback(creminder)
       cback = creminder
       setCashAmount(camount)
-      setCashspend(arrayAction(cashSpend,coincount))
       while ( j < coins.length)
       {
         if(camount[j] > 0 && cback >= coins[j]){
@@ -65,6 +64,7 @@ function App() {
       }
     }
     while(cbackIsTradable)
+    setCashspend(arrayAction(cashSpend,coincount))
   }
 
   function arrayAction(currentAmount, amountToDicrement){
@@ -83,15 +83,19 @@ function App() {
   }
 
   function handleChange(e){
-    e.preventDefault();
-    setValue(parseInt(e.target.value))
+    const re = /^\d{1,}(\.\d{0,4})?$/;
+
+    if (e.target.value.match(re)) {
+      setValue(e.target.value)
+    } 
   }
  
   function handleClick(e){
-    e.preventDefault();
-    const buttonValue = e.target.innerHTML;
-    textInput.current.value += buttonValue
-    setValue(textInput.current.value)
+    // e.preventDefault();
+    
+    const buttonValue = e.target.value;
+    // textInput.current.value += buttonValue
+    setValue(textInput.current.value += buttonValue)
   }
 
   function handleSubmit(e) {
@@ -100,7 +104,7 @@ function App() {
       greedy(+value,cash,cashamount)
     } else alert('не хватает средств в банкомате!')
     textInput.current.value = ''
-    setValue(0)
+    setValue('')
   }
 
   function handleOptionChange(e){
@@ -110,26 +114,32 @@ function App() {
       case '1':
         setCashAmount([100,400,1000,3000,5000,8000,10000])
         setCashspend([0,0,0,0,0,0,0])
+        setCashback(0)
         break;
       case '2':
         setCashAmount([476,345,6741,4362,234,1643,3450])
         setCashspend([0,0,0,0,0,0,0])
+        setCashback(0)
         break;
       case '3':
         setCashAmount([234,678,845,2451,9654,2345,234])
         setCashspend([0,0,0,0,0,0,0])
+        setCashback(0)
         break;
       case '4':
         setCashAmount([546,562,2543,4365,2154,124,342])
         setCashspend([0,0,0,0,0,0,0])
+        setCashback(0)
         break;
       case '5':
         setCashAmount([2732,347,479,7556,3296,1257,3854])
         setCashspend([0,0,0,0,0,0,0])
+        setCashback(0)
         break;
       case '6':
         setCashAmount([73,147,279,356,696,857,854])
         setCashspend([0,0,0,0,0,0,0])
+        setCashback(0)
         break;
       default:
         break;
@@ -162,10 +172,10 @@ function App() {
       </div>}
       </div>
       <form onSubmit ={handleSubmit}>
-        <input  ref={textInput} placeholder = 'сумма' onChange = {handleChange}/>
+        <input step = '0.01' value = {value}  ref={textInput} placeholder = 'сумма' onChange = {handleChange}/>
         <input type="submit" value="Выдача" />
       </form>
-        <input type="number" placeholder = 'остаток' readOnly = {true} ref={textOutput} value = {cashback}/>
+        <input type="number" placeholder = 'остаток' readOnly = {true} ref={textOutput} value = {cashback.toFixed(2)}/>
       <div className = 'btnBox'>
       {
         btnValues.flat().map((btn, i) => {
