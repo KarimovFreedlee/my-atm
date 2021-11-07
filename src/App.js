@@ -156,7 +156,7 @@ function App() {
       <div>
       {showInfo ? 
         <div className = 'close-btn'><div>наличные в банкомате</div>
-          <div className = 'outputs'>
+          <div className = 'info'>
             {cashamount.map((obj,i) => {
               return (
                 <div className = 'elem' key = {i}>
