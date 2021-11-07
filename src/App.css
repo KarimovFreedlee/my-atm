@@ -84,3 +84,12 @@ button:hover {
     padding-left: 25%;
   }
 }
+
+
+@media screen and (max-width: 764px) {
+  .info{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 5px;
+  }
+}
