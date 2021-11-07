@@ -88,4 +88,13 @@ button:hover {
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 5px;
   }
+
+  .optionBtnBox{
+    justify-content: center;
+    padding-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1;
+    grid-gap: 5px;
+  }
 }
