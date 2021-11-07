@@ -79,10 +79,6 @@ button:hover {
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 5px;
   }
-
-  .elem{
-    padding-left: 25%;
-  }
 }
 
 
