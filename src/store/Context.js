@@ -52,50 +52,44 @@ export function MainProvider({ children }){
         let maxIndex
         let newArr=[]
         do{
-            if(cbackIsTradable){   // проверяем остаток
-                creminder = cback
-            }
+            creminder += cback
             let i = 0; 
             let j = 0
-            newArr = [...camount]
+    
 
-        while( i < coins.length ) 
+        while(i < coins.length ) 
         { 
-            maxIndex = indexOfMax(newArr)
-            console.log('maxIndex: '+maxIndex)
-            console.log(newArr)
-            console.log('creminder: '+creminder)
-            console.log(newArr[maxIndex])
-            while ( coins[maxIndex] <= creminder && camount[maxIndex] > 0) // cash giving
+            maxIndex = indexOfMax(camount)
+            while ( coins[maxIndex] <= creminder && camount[maxIndex] > 0 ) // cash giving
             {
-                console.log('зашёл в ив')
+                console.log('зашёл')
                 creminder = creminder - coins[maxIndex];
                 camount[maxIndex]--
                 maxIndex = indexOfMax(camount)
                 ccoin = coincount[maxIndex];
                 ccoin += 1;
                 coincount[maxIndex] = ccoin;
-            }   
-            i++;
-
+                console.log(coincount)
+            } 
+            i++
+            // delete newArr[maxIndex] 
         }
-        setCashback(creminder)
+        console.log('Exit')
         cback = creminder
+
         setCashAmount(camount)
-        while ( j < coins.length)
-        {
+        for(j; j < coins.length; j++){
             if(camount[j] > 0 && cback >= coins[j]){
-            cbackIsTradable = true
-            break
+                cbackIsTradable = true
             } else 
             { 
-            cbackIsTradable = false 
+                cbackIsTradable = false 
             }
-            j++
         }
-        }
-        while(cbackIsTradable)
-        setCashspend(arrayAction(cashSpend,coincount))
+        setCashback(creminder)
+    }
+    while(cbackIsTradable)
+    setCashspend(arrayAction(cashSpend,coincount))
     }
 
     function arrayAction(currentAmount, amountToIcrement){
@@ -131,7 +125,6 @@ export function MainProvider({ children }){
         e.preventDefault();
         if(countCash(cashamount, cash) - value  > 0){
         greedy(+value,cash,cashamount)
-        // greedyCheck(+value,cash,cashamount)
         } else alert('не хватает средств в банкомате!')
         textInput.current.value = ''
         setValue('')
@@ -143,31 +136,37 @@ export function MainProvider({ children }){
         case '1':
             setCashAmount([100,400,1000,3000,5000,8000,10000])
             setCashspend([0,0,0,0,0,0,0])
+            setValue('')
             setCashback(0)
             break;
         case '2':
             setCashAmount([476,345,6741,4362,234,1643,3450])
             setCashspend([0,0,0,0,0,0,0])
+            setValue('')
             setCashback(0)
             break;
         case '3':
             setCashAmount([234,678,845,2451,9654,2345,234])
             setCashspend([0,0,0,0,0,0,0])
+            setValue('')
             setCashback(0)
             break;
         case '4':
             setCashAmount([546,562,2543,4365,2154,124,342])
             setCashspend([0,0,0,0,0,0,0])
+            setValue('')
             setCashback(0)
             break;
         case '5':
             setCashAmount([2732,347,479,7556,3296,1257,3854])
             setCashspend([0,0,0,0,0,0,0])
+            setValue('')
             setCashback(0)
             break;
         case '6':
             setCashAmount([73,147,279,356,696,857,854])
             setCashspend([0,0,0,0,0,0,0])
+            setValue('')
             setCashback(0)
             break;
         default:
