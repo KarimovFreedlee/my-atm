@@ -34,7 +34,7 @@ export function MainProvider({ children }){
         var maxIndex = 0;
     
         for (var i = 1; i < arr.length; i++) {
-            if (arr[i] > max) {
+            if (arr[i] >= max) {
                 maxIndex = i;
                 max = arr[i];
             }
@@ -62,10 +62,10 @@ export function MainProvider({ children }){
         while( i < coins.length ) 
         { 
             maxIndex = indexOfMax(newArr)
-
             console.log('maxIndex: '+maxIndex)
             console.log(newArr)
             console.log('creminder: '+creminder)
+            console.log(newArr[maxIndex])
             while ( coins[maxIndex] <= creminder && camount[maxIndex] > 0) // cash giving
             {
                 console.log('зашёл в ив')
